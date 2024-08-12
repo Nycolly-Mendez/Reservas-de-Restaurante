@@ -1,0 +1,49 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Crear nuevo cliente</h1>
+    <form th:action="@{/clientes/save}" th:object="${cliente}" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Estriba su nombre" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" class="form-control" th:field="*{apellido}" id="apellido" placeholder="Escriba su apellido" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="numeroTelefono">Número de Teléfono</label>
+                    <input type="text" class="form-control" th:field="*{numeroTelefono}" id="numeroTelefono" placeholder="Escriba su número de teléfono" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="numeroDUI">Número de DUI</label>
+                    <input type="text" class="form-control" th:field="*{numeroDUI}" id="numeroDUI" placeholder="Escriba su número de DUI" required>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar</button> |
+        <a th:href="@{/clientes}">Regresar</a>
+    </form>
+</div>
+</html>
