@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Reserva</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h1 class="mb-4">Editar Reserva</h1>
+                <form th:action="@{/reservas/save}" th:object="${reserva}" method="post">
+                    <input type="hidden" th:field="*{id}">
+
+                    <!-- Campo de Número de Personas -->
+                    <div class="mb-3">
+                        <label for="numeroPersonas" class="form-label">Número de Personas</label>
+                        <input type="number" class="form-control" th:field="*{numeroPersonas}" id="numeroPersonas" placeholder="Número de personas" required>
+                    </div>
+
+                    <!-- Campo de Fecha y Hora -->
+                    <div class="mb-3">
+                        <label for="fechaHora" class="form-label">Fecha y Hora</label>
+                        <input type="datetime-local" class="form-control" id="fechaHora" th:field="*{fechaHora}" th:value="${formattedFechaHora}" required>
+
+                    </div>
+
+                    <!-- Campo de Estado -->
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado</label>
+                        <select id="estado" th:field="*{estado}" class="form-select" required>
+                            <option th:each="estado : ${estados}"
+                                    th:value="${estado.name()}"
+                                    th:text="${estado.name()}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        <a th:href="@{/reservas}" class="btn btn-secondary">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para establecer el valor del campo de fecha y hora -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fechaHoraInput = document.getElementById('fechaHora');
+
+            // Asumir que `originalDate` es el valor obtenido del servidor
+            const originalDate = "31/08/24, 12:25"; // Cambiar esto según tu caso
+
+            // Convertir la fecha al formato requerido por datetime-local
+            const formattedDate = convertToLocalDateTime(originalDate);
+
+            // Establecer el valor del campo de fecha y hora
+            fechaHoraInput.value = formattedDate;
+        });
+
+        function convertToLocalDateTime(inputDate) {
+            const [datePart, timePart] = inputDate.split(', ');
+            const [day, month, year] = datePart.split('/');
+            const fullYear = year.length === 2 ? '20' + year : year;
+            const formattedDate = `${fullYear}-${month}-${day}T${timePart}`;
+            return formattedDate;
+        }
+    </script>
+    </body>
+</div>
+</html>

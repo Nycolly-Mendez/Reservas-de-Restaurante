@@ -1,0 +1,52 @@
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nueva Reserva</title>
+    <!-- Incluye Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <h1>Crear nueva reserva</h1>
+        <form th:action="@{/reservas/save}" th:object="${reserva}" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fechaHora">Fecha y Hora</label>
+                        <input type="datetime-local" class="form-control" th:field="*{fechaHora}" id="fechaHora" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="numeroPersonas">Número de Personas</label>
+                        <input type="number" class="form-control" th:field="*{numeroPersonas}" id="numeroPersonas" required>
+                    </div>
+                </div>
+
+            </div>
+            <label for="estado">Estado:</label>
+            <select id="estado" th:field="*{estado}">
+                <option th:each="estado : ${T(org.esfe.Modelos.Reservas$EstadoReserva).values()}"
+                        th:value="${estado.name()}"
+                        th:text="${estado.name()}">
+                </option>
+            </select>
+            <hr>
+            <button type="submit" class="btn btn-primary">Guardar</button> |
+            <a class="btn btn-secondary" th:href="@{/reservas}">Regresar</a>
+        </form>
+    </div>
+</div>
+
+<!-- Incluye jQuery y Bootstrap JS (opcional, solo si usas componentes de JS de Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
